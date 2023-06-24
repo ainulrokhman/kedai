@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2023 at 09:09 PM
+-- Generation Time: Jun 24, 2023 at 09:19 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -175,7 +175,7 @@ INSERT INTO `menu` (`id_menu`, `nama_menu`, `detail_menu`, `kategori`, `stok`, `
 CREATE TABLE `menu_dibooking` (
   `id` int(11) NOT NULL,
   `no_invoice` varchar(17) NOT NULL,
-  `nama_makanan` varchar(250) NOT NULL,
+  `nama_makanan` varchar(100) NOT NULL,
   `jumlah` int(5) NOT NULL,
   `sub_total` int(12) NOT NULL,
   `status_order` varchar(255) NOT NULL DEFAULT 'success'
@@ -305,14 +305,16 @@ ALTER TABLE `meja`
 -- Indexes for table `menu`
 --
 ALTER TABLE `menu`
-  ADD PRIMARY KEY (`id_menu`);
+  ADD PRIMARY KEY (`id_menu`),
+  ADD KEY `nama_menu` (`nama_menu`);
 
 --
 -- Indexes for table `menu_dibooking`
 --
 ALTER TABLE `menu_dibooking`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `no_invoice` (`no_invoice`);
+  ADD KEY `no_invoice` (`no_invoice`),
+  ADD KEY `nama_makanan` (`nama_makanan`);
 
 --
 -- Indexes for table `metode_pembayaran`
@@ -412,7 +414,8 @@ ALTER TABLE `gambar_menu`
 -- Constraints for table `menu_dibooking`
 --
 ALTER TABLE `menu_dibooking`
-  ADD CONSTRAINT `menu_dibooking_ibfk_1` FOREIGN KEY (`no_invoice`) REFERENCES `booking` (`no_invoice`);
+  ADD CONSTRAINT `menu_dibooking_ibfk_1` FOREIGN KEY (`no_invoice`) REFERENCES `booking` (`no_invoice`),
+  ADD CONSTRAINT `menu_dibooking_ibfk_2` FOREIGN KEY (`nama_makanan`) REFERENCES `menu` (`nama_menu`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
