@@ -18,7 +18,7 @@ class Saran extends CI_Controller
             $arr['nomor_telepon'] = $profil['nomor_telepon'];
             $arr['maps_link'] = $profil['maps_link'];
             $arr['instagram'] = $profil['instagram'];
-            $arr['facebook'] = $profil['facebook'];
+            $arr['whatsapp'] = $profil['whatsapp'];
             $arr['foto_usaha_1'] = $profil['foto_usaha_1'];
             $arr['foto_usaha_2'] = $profil['foto_usaha_2'];
             $arr['foto_usaha_3'] = $profil['foto_usaha_3'];
@@ -51,7 +51,7 @@ class Saran extends CI_Controller
             $data['alamat'] = $profil['alamat'];
             $data['nomor_telepon'] = $profil['nomor_telepon'];
             $data['instagram'] = $profil['instagram'];
-            $data['facebook'] = $profil['facebook'];
+            $data['whatsapp'] = $profil['whatsapp'];
             $this->load->view('home/layout/header', $data);
             $this->load->view('home/krisar');
             $this->load->view('home/layout/footer');
