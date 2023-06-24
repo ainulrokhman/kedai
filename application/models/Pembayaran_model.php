@@ -31,6 +31,7 @@ class pembayaran_model extends CI_Model
             $pathFBukti = "assets/dataresto/bukti_bayar/";
             unlink($pathFBukti . $gambar_bukti);
             $data = [
+                "id_pegawai" => $this->session->userdata('id_pegawai'),
                 "bukti_pembayaran" => null
             ];
             $this->db->where('id', $id_booking);
@@ -40,6 +41,7 @@ class pembayaran_model extends CI_Model
                 "status_pembayaran" => $this->input->post('status_pembayaran'),
                 "total_sudah_dibayar" => $this->input->post('total_sudah_dibayar'),
                 "id_metode_pembayaran" => $this->input->post('metode'),
+                "id_pegawai" => $this->session->userdata('id_pegawai'),
             ];
             $this->db->where('id', $id_booking);
             $this->db->update('booking', $data);

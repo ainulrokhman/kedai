@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2023 at 07:30 PM
+-- Generation Time: Jun 24, 2023 at 09:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -53,9 +53,10 @@ INSERT INTO `admin` (`id_pegawai`, `nama`, `email`, `alamat`, `password`, `telep
 
 CREATE TABLE `booking` (
   `id` int(11) NOT NULL,
-  `no_invoice` varchar(17) NOT NULL,
+  `id_pegawai` int(11) DEFAULT NULL,
   `id_metode_pembayaran` int(11) DEFAULT NULL,
   `id_meja` int(11) NOT NULL,
+  `no_invoice` varchar(17) NOT NULL,
   `nama_pemesan` varchar(250) NOT NULL,
   `nomor_hp` varchar(250) NOT NULL,
   `tanggal_pesan` datetime NOT NULL,
@@ -71,8 +72,9 @@ CREATE TABLE `booking` (
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`id`, `no_invoice`, `id_metode_pembayaran`, `id_meja`, `nama_pemesan`, `nomor_hp`, `tanggal_pesan`, `tanggal_reservasi`, `total_pembayaran`, `total_sudah_dibayar`, `batas_pembayaran_dp`, `status_pembayaran`, `bukti_pembayaran`) VALUES
-(1, 'INV20230624232221', 7, 1, 'Mela Nurul Afwa', '0', '2023-06-24 23:22:21', '2023-06-24', 30000, 30000, '2023-06-25 23:22:21', 'Pesanan Selesai', '24062023182247ayambakar.jpg');
+INSERT INTO `booking` (`id`, `id_pegawai`, `id_metode_pembayaran`, `id_meja`, `no_invoice`, `nama_pemesan`, `nomor_hp`, `tanggal_pesan`, `tanggal_reservasi`, `total_pembayaran`, `total_sudah_dibayar`, `batas_pembayaran_dp`, `status_pembayaran`, `bukti_pembayaran`) VALUES
+(1, NULL, 7, 1, 'INV20230624232221', 'Mela Nurul Afwa', '0', '2023-06-24 23:22:21', '2023-06-24', 30000, 30000, '2023-06-25 23:22:21', 'Pesanan Selesai', '24062023182247ayambakar.jpg'),
+(2, 3, 1, 3, 'INV20230625020701', 'Mela Nurul Afwa', '0', '2023-06-25 02:07:01', '2023-06-25', 30000, 30000, '2023-06-26 02:07:01', 'Pesanan Selesai', 'Kosong');
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,9 @@ CREATE TABLE `menu_dibooking` (
 INSERT INTO `menu_dibooking` (`id`, `no_invoice`, `nama_makanan`, `jumlah`, `sub_total`, `status_order`) VALUES
 (1, 'INV20230624232221', 'Sapi Lada Hitam', 1, 20000, 'success'),
 (2, 'INV20230624232221', 'Roti Bakar', 1, 10000, 'success'),
-(3, 'INV20230624232221', 'Roti Bakar', 1, 10000, 'success');
+(3, 'INV20230624232221', 'Roti Bakar', 1, 10000, 'success'),
+(4, 'INV20230625020701', 'Ayam Goreng Srundeng', 1, 15000, 'success'),
+(5, 'INV20230625020701', 'Mie Jawa Spesial', 1, 15000, 'success');
 
 -- --------------------------------------------------------
 
@@ -281,7 +285,8 @@ ALTER TABLE `booking`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `no_invoice` (`no_invoice`),
   ADD KEY `id_metode_pembayaran` (`id_metode_pembayaran`),
-  ADD KEY `id_meja` (`id_meja`);
+  ADD KEY `id_meja` (`id_meja`),
+  ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
 -- Indexes for table `gambar_menu`
@@ -341,7 +346,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `gambar_menu`
@@ -365,7 +370,7 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `menu_dibooking`
 --
 ALTER TABLE `menu_dibooking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `metode_pembayaran`
@@ -394,7 +399,8 @@ ALTER TABLE `saran_kritik`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`id_metode_pembayaran`) REFERENCES `metode_pembayaran` (`id`),
-  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`id_meja`) REFERENCES `meja` (`id_meja`);
+  ADD CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`id_meja`) REFERENCES `meja` (`id_meja`),
+  ADD CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`id_pegawai`) REFERENCES `admin` (`id_pegawai`);
 
 --
 -- Constraints for table `gambar_menu`
